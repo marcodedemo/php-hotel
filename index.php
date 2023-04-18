@@ -85,7 +85,18 @@ $arrayKeys = array_keys($hotels[0]);
         <input type="checkbox" id="parking" value="available" name="parking">
         <label for="parking">Parcheggio</label> <br>
 
-        
+        <label for="vote">Voto Hotel:</label>
+        <select name="vote" id="vote">
+            <option value="0"></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+
+
+        </select>
+        <br>
 
         <input type="submit">
 
