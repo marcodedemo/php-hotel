@@ -44,6 +44,7 @@ $hotels = [
 
 $arrayKeys = array_keys($hotels[0]);
 
+
 ?>
 
 
@@ -62,40 +63,96 @@ $arrayKeys = array_keys($hotels[0]);
     <title>PHP Hotel</title>
 
 </head>
+
+
+<!-- css -->
+<style>
+
+    #filters{
+        text-align: center;
+
+        padding: 50px;
+    }
+
+</style>
+
+
+
 <body>
  
+    <form id="filters" action="index.php" method="GET">
+
+        <input type="checkbox" id="parking" value="available" name="parking">
+        <label for="parking">Parcheggio</label> <br>
+
+        
+
+        <input type="submit">
+
+
+    </form>
 
 
     <div class="container text-center">
 
-    <?php 
+        <?php 
 
-    // div row per i titoli
-    echo "<div class='row py-2'>";
-    
-    // ciclo for per la creazione dei titoli
-    for($i=0; $i< count($hotels); $i++){
-        echo "<strong class='col text-uppercase'>{$arrayKeys[$i]}</strong>";
-
-    }
-    // chiusura row titoli
-    echo "</div>";
-
-
-    // ciclo foreach per la creazione di una row per ogni hotel
-    foreach($hotels as $hotel){
+        // div row per i titoli
         echo "<div class='row py-2'>";
+        
+        // ciclo for per la creazione dei titoli
+        for($i=0; $i< count($hotels); $i++){
+            echo "<strong class='col text-uppercase'>{$arrayKeys[$i]}</strong>";
 
-        // ciclo foreach per la creazione di una col per ogni info 
-        foreach($hotel as $key => $info){
-            echo "<div class='col'>{$info}</div>";
         }
-
-        // chiusura row singolo hotel
+        // chiusura row titoli
         echo "</div>";
-    }
 
-    ?>
+
+        
+
+
+
+
+        if(!isset($_GET['parking'])){
+            // ciclo foreach per la creazione di una row per ogni hotel
+            foreach($hotels as $hotel){
+                echo "<div class='row py-2'>";
+
+                // ciclo foreach per la creazione di una col per ogni info 
+                foreach($hotel as $key => $info){
+                    echo "<div class='col'>{$info}</div>";
+                }
+
+                // chiusura row singolo hotel
+                echo "</div>";
+            }
+
+        }elseif($_GET['parking'] == "available"){
+
+            foreach($hotels as $hotel){
+
+                
+                if($hotel['parking'] == true){
+
+                    echo "<div class='row py-2'>";
+
+                    // ciclo foreach per la creazione di una col per ogni info 
+                    foreach($hotel as $info){
+                        echo "<div class='col'>{$info}</div>";
+                    }
+
+                    // chiusura row singolo hotel
+                    echo "</div>";
+                    
+                }
+                
+                
+            }
+            
+        };
+
+        ?>
 
     </div>
 
