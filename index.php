@@ -59,7 +59,20 @@ $hotels = [
 <body>
  
 
+    <?php 
+    
+    foreach($hotels as $hotel){
 
+        echo "<ul>";
+
+        foreach($hotel as $key => $info){
+            echo "<li>{$key}: {$info}</li>";
+        }
+
+        echo "</ul>";
+    }
+
+    ?>
 
 </body>
 </html>
