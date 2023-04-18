@@ -82,11 +82,11 @@ $arrayKeys = array_keys($hotels[0]);
  
     <form id="filters" action="index.php" method="GET">
 
-        <input type="checkbox" id="parking" value="available" name="parking">
+        <input class="my-2" type="checkbox" id="parking" value="available" name="parking">
         <label for="parking">Parcheggio</label> <br>
 
         <label for="vote">Voto Hotel:</label>
-        <select name="vote" id="vote">
+        <select class="my-2" name="vote" id="vote">
             <option value="0"></option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -125,21 +125,62 @@ $arrayKeys = array_keys($hotels[0]);
 
 
 
-        if(!isset($_GET['parking'])){
+        // se gli input del form non sono settati
+        if(!isset($_GET['parking']) && !isset($_GET['vote'])){
+
             // ciclo foreach per la creazione di una row per ogni hotel
             foreach($hotels as $hotel){
                 echo "<div class='row py-2'>";
 
                 // ciclo foreach per la creazione di una col per ogni info 
-                foreach($hotel as $key => $info){
+                foreach($hotel as $info){
                     echo "<div class='col'>{$info}</div>";
                 }
 
                 // chiusura row singolo hotel
                 echo "</div>";
             }
+        
 
-        }elseif($_GET['parking'] == "available"){
+        // altrimenti se il filtro parcheggio non è settato e il filtro voto è uguale a 0
+        }elseif(!isset($_GET['parking']) && $_GET['vote'] == 0){
+
+            // ciclo foreach per la creazione di una row per ogni hotel
+            foreach($hotels as $hotel){
+                echo "<div class='row py-2'>";
+
+                // ciclo foreach per la creazione di una col per ogni info 
+                foreach($hotel as $info){
+                    echo "<div class='col'>{$info}</div>";
+                }
+
+                // chiusura row singolo hotel
+                echo "</div>";
+            }
+        
+            
+        // altrimenti se è settato solo l'input corrispondente al filtro voti
+        }elseif($_GET['vote'] != 0 && !isset($_GET['parking'])){
+
+            foreach($hotels as $hotel){
+
+                // se il voto dell'hotel è maggiore o uguale al filtro voto
+                if($hotel['vote'] >= $_GET['vote']){
+                    
+                    echo "<div class='row py-2'>";
+
+                    // ciclo foreach per la creazione di una col per ogni info 
+                    foreach($hotel as $info){
+                        echo "<div class='col'>{$info}</div>";
+                    }
+
+                    // chiusura row singolo hotel
+                    echo "</div>";
+                }
+            }
+
+        // altrimenti se è settato solo l'input corrispondente al filtro parchegio
+        }elseif($_GET['parking'] == "available"  && $_GET['vote'] == 0){
 
             foreach($hotels as $hotel){
 
@@ -160,8 +201,31 @@ $arrayKeys = array_keys($hotels[0]);
                 
                 
             }
-            
-        };
+
+        // altrimenti se sono impostati entrambi i filtri 
+        }else{
+
+            foreach($hotels as $hotel){
+
+                
+                if($hotel['parking'] == true && $hotel['vote'] >= $_GET['vote']){
+
+                    echo "<div class='row py-2'>";
+
+                    // ciclo foreach per la creazione di una col per ogni info 
+                    foreach($hotel as $info){
+                        echo "<div class='col'>{$info}</div>";
+                    }
+
+                    // chiusura row singolo hotel
+                    echo "</div>";
+                    
+                }
+                
+                
+            }
+        }
+        
 
         ?>
 
